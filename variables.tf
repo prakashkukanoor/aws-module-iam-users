@@ -29,3 +29,8 @@ variable "dynamodb_table_name" {
   description = "Name for the DynamoDB table for state locking"
   type        = string
 }
+
+variable "users" {
+  description = "Map of policy names to lists of users for each IAM group."
+  type        = map(list(string))
+}
