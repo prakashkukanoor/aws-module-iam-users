@@ -22,33 +22,14 @@ resource "aws_iam_policy" "this" {
   tags   = local.common_tags
 }
 
-resource "aws_iam_role" "this" {
-  for_each = aws_iam_policy.this
-
-  name = "${each.key}_role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect    = "Allow"
-        Principal = { Service = "ec2.amazonaws.com" }
-        Action    = "sts:AssumeRole"
-      }
-    ]
-  })
+output "policy" {
+  value = [for key, value in aws_iam_policy.this: key]
+  
 }
-
-resource "aws_iam_role_policy_attachment" "this" {
-  for_each = aws_iam_policy.this
-
-  role       = aws_iam_role.this[each.key].name
-  policy_arn = each.value.arn
-}
-
 resource "aws_iam_group" "this" {
   for_each = aws_iam_policy.this
 
-  name = "${each.key}_group"
+  name = "${each.key}-group"
 }
 
 resource "aws_iam_group_policy_attachment" "this" {
@@ -60,9 +41,9 @@ resource "aws_iam_group_policy_attachment" "this" {
 
 resource "aws_iam_user" "users" {
   for_each = tomap({
-    for policy_name, user_list in var.users :
+    for policy_name, user_obj in var.users :
     policy_name => {
-      for user in user_list :
+      for user in user_obj :
       "${policy_name}-${user}" => {
         policy_name = policy_name
         user_name   = user
@@ -73,14 +54,14 @@ resource "aws_iam_user" "users" {
   name = each.value.user_name
 }
 
-resource "aws_iam_user_group_membership" "user_group_membership" {
-  for_each = aws_iam_user.users
+# resource "aws_iam_user_group_membership" "user_group_membership" {
+#   for_each = aws_iam_user.users
 
-  user = each.value.user_name
-  groups = [
-    aws_iam_group.this[each.value.policy_name].name
-  ]
-}
+#   user = each.value.user_name
+#   groups = [
+#     aws_iam_group.this[each.value.policy_name].name
+#   ]
+# }
 
 
 

@@ -8,7 +8,6 @@
 
 # .json files
 *.json
-*.json.tpl
 
 # Crash log files
 crash.log
