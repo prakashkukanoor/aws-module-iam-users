@@ -43,15 +43,19 @@ resource "aws_iam_user" "users" {
   for_each = tomap({
     for policy_name, user_obj in var.users :
     policy_name => {
-      for user in user_obj :
+      for user, path in user_obj :
       "${policy_name}-${user}" => {
         policy_name = policy_name
         user_name   = user
+        user_path = path
       }
     }
   })
 
   name = each.value.user_name
+  path = each.value.user_path
+
+  tags = common_tags
 }
 
 # resource "aws_iam_user_group_membership" "user_group_membership" {
