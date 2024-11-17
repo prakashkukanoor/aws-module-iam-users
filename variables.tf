@@ -31,6 +31,16 @@ variable "dynamodb_table_name" {
 }
 
 variable "users" {
-  description = "Map of policy names to lists of users for each IAM group."
-  type        = map(list(string))
+  description = "List of users to provide admin and non admin access"
+  type = list(object({
+    user = string
+    path = string
+  }))
+
+}
+
+variable "public_key_file_path" {
+  description = "Local path to your public key asc file"
+  type = string
+  
 }
