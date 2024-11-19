@@ -47,7 +47,7 @@ resource "aws_iam_user" "users" {
 
 resource "aws_iam_access_key" "this" {
   for_each = aws_iam_user.users
-  pgp_key = file("${var.public_key_file_path}")
+  pgp_key =  file("${var.public_key_file_path}")
 
   user    = each.value.name
 }
