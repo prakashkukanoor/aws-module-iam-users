@@ -5,6 +5,7 @@
 *.tfstate
 *.tfstate.*
 .terraform.lock.hcl
+.DS_Store
 
 # .json files
 *.json
