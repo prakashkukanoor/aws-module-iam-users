@@ -15,7 +15,7 @@ variable "team" {
   description = "Team owner for this resource"
 }
 
-variable "policy_json" {
+variable "path_to_json_file" {
   type        = string
   description = "Name of the json file with policy"
 }
@@ -41,6 +41,6 @@ variable "users" {
 
 variable "public_key_file_path" {
   description = "Local path to your public key asc file"
-  type = string
-  
+  type        = string
+
 }

@@ -1,7 +1,7 @@
 [
     {
         "name": "networking-admins",
-        "path": "/terraform/networking/users/admins/",
+        "path": "/terraform/networking/admins/users/",
         "policy_statement": {
             "Version": "2012-10-17",
             "Statement": [
@@ -81,7 +81,7 @@
     },
     {
         "name": "networking-non-admins",
-        "path": "/terraform/networking/users/non-admins/",
+        "path": "/terraform/networking/non-admins/users/",
         "policy_statement": {
             "Version": "2012-10-17",
             "Statement": [

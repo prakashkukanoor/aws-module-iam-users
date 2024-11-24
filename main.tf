@@ -1,5 +1,5 @@
 locals {
-  policies = jsondecode(templatefile("${path.module}/${var.policy_json}", {
+  policies = jsondecode(templatefile("${var.path_to_json_file}", {
     dynamodb_table_name = var.dynamodb_table_name
     bucket_name         = var.bucket_name
   }))
@@ -47,9 +47,9 @@ resource "aws_iam_user" "users" {
 
 resource "aws_iam_access_key" "this" {
   for_each = aws_iam_user.users
-  pgp_key =  file("${var.public_key_file_path}")
+  pgp_key  = file("${var.public_key_file_path}")
 
-  user    = each.value.name
+  user = each.value.name
 }
 
 resource "aws_iam_user_group_membership" "user_group_membership" {
