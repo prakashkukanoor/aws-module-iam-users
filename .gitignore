@@ -9,6 +9,7 @@
 
 # .json files
 *.json
+policy.json.tpl
 
 # Crash log files
 crash.log
